@@ -1,83 +1,40 @@
 package com.gotcake.json.parser.minify;
 
-import com.gotcake.json.JSONEncoder;
-import com.gotcake.json.RuntimeIOException;
+import com.gotcake.json.JSONArrayBuilder;
 import com.gotcake.json.parser.JSONArrayHandler;
 import com.gotcake.json.parser.JSONObjectHandler;
 import static com.gotcake.json.parser.minify.MinifierJSONHandlerFactory.*;
-
-import java.io.IOException;
-import java.io.Writer;
 
 /**
  * Created by aaron on 9/29/14.
  */
 public class MinifierJSONArrayHandler implements JSONArrayHandler<Object> {
 
-    private Writer writer;
-    private boolean first;
+    private JSONArrayBuilder builder;
 
-    public MinifierJSONArrayHandler(Writer writer) {
-        this.writer = writer;
-        first = true;
-        try{
-            writer.write('[');
-        } catch(IOException e) {
-            throw new RuntimeIOException(e);
-        }
+    public MinifierJSONArrayHandler(JSONArrayBuilder builder) {
+        this.builder = builder;
     }
 
     @Override
     public void handleElement(Object arrayElement) {
-        if (arrayElement != DUMMY_OBJ) {
-            if (first) {
-                first = false;
-            } else {
-                try {
-                    writer.write(',');
-                } catch(IOException e) {
-                    throw new RuntimeIOException(e);
-                }
-            }
-            JSONEncoder.write(arrayElement, writer);
-        }
+        if (arrayElement != DUMMY_OBJ)
+            builder.element(arrayElement);
     }
 
     @Override
     public Object getObject() {
-        try {
-            writer.write(']');
-        } catch(IOException e) {
-            throw new RuntimeIOException(e);
-        }
+        builder.end();
         return DUMMY_OBJ;
     }
 
     @Override
     public JSONObjectHandler<?> getChildObjectHandler(int index) {
-        if (first) {
-            first = false;
-        } else {
-            try {
-                writer.write(',');
-            } catch(IOException e) {
-                throw new RuntimeIOException(e);
-            }
-        }
-        return new MinifierJSONObjectHandler(writer);
+        return new MinifierJSONObjectHandler(builder.objectElement());
     }
 
     @Override
     public JSONArrayHandler<?> getChildArrayHandler(int index) {
-        if (first) {
-            first = false;
-        } else {
-            try {
-                writer.write(',');
-            } catch(IOException e) {
-                throw new RuntimeIOException(e);
-            }
-        }
-        return new MinifierJSONArrayHandler(writer);
+        return new MinifierJSONArrayHandler(builder.arrayElement());
     }
 }

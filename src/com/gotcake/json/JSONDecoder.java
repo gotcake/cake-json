@@ -3,10 +3,7 @@ package com.gotcake.json;
 import com.gotcake.json.parser.*;
 import com.gotcake.json.parser.impl.DefaultJSONHandlerFactory;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
@@ -35,39 +32,19 @@ public class JSONDecoder<A, O> {
     }
 
     /**
-     * Parse a string containing a single JSON object
-     * @param string a string containing a single JSON object
-     * @return a map containing all the keys and values of the JSON object
+     * Parse a single value from a file containing JSON
+     * @param file the path to the file to parse
+     * @return the parsed value
      */
-    public static LinkedHashMap<String, Object> parseObject(String string) {
-        return createDefaultDecoder(new StringReader(string)).parseObject();
-    }
-
-    /**
-     * Parse a string containing a single JSON array
-     * @param string a string containing a single JSON array
-     * @return a list containing all the elements of the JSON array
-     */
-    public static ArrayList<Object> parseArray(String string) {
-        return createDefaultDecoder(new StringReader(string)).parseArray();
-    }
-
-    /**
-     * Parse a Reader with a stream containing a single JSON object
-     * @param r a Reader with a stream containing a single JSON object
-     * @return a map containing all the keys and values of the JSON object
-     */
-    public static LinkedHashMap<String, Object> parseObject(Reader r) {
-        return createDefaultDecoder(r).parseObject();
-    }
-
-    /**
-     * Parse a Reader with a stream containing a single JSON array
-     * @param r a Reader with a stream containing a single JSON array
-     * @return a list containing all the elements of the JSON array
-     */
-    public static ArrayList<Object> parseArray(Reader r) {
-        return createDefaultDecoder(r).parseArray();
+    public static Object parseFile(String file) {
+        try {
+            FileReader reader = new FileReader(file);
+            ArrayList<Object> data = createDefaultDecoder(reader).parseArray();
+            reader.close();
+            return data;
+        } catch (IOException e) {
+            throw new RuntimeIOException(e);
+        }
     }
 
     /**
@@ -259,7 +236,7 @@ public class JSONDecoder<A, O> {
         return parseArray(handlerFactory.getArrayHandler(), true);
     }
 
-    private Number parseNumber() {
+    public Number parseNumber() {
 
         StringBuilder sb = new StringBuilder();
         char ch = ' ';
@@ -404,7 +381,7 @@ public class JSONDecoder<A, O> {
         return handler.getObject();
     }
 
-    private String parseString() {
+    public String parseString() {
 
         expect('"', "parsing string", "opening quote");
 

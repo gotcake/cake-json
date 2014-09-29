@@ -1,5 +1,6 @@
 package com.gotcake.json.test;
 
+import com.gotcake.json.JSONArrayBuilder;
 import com.gotcake.json.JSONEncoder;
 import com.gotcake.json.JSONWritable;
 import org.junit.Test;
@@ -109,8 +110,8 @@ public class JSONEncoderTest {
         }
 
         @Override
-        public void writeJSON(Writer writer) throws IOException {
-            JSONArrayWriter arrayWriter = JSONEncoder.arrayWriter(writer);
+        public void writeJSON(JSONEncoder encoder) throws IOException {
+            JSONArrayBuilder arrayWriter = encoder.array();
             for (int i=1; i<=n; ++i)
                 arrayWriter.element(i*i);
             arrayWriter.end();

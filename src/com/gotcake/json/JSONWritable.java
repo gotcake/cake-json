@@ -8,6 +8,6 @@ import java.io.Writer;
  */
 public interface JSONWritable {
 
-    public void writeJSON(Writer writer) throws IOException;
+    public void writeJSON(JSONEncoder encoder) throws IOException;
 
 }

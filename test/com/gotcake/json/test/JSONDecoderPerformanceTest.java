@@ -64,7 +64,7 @@ public class JSONDecoderPerformanceTest {
             JSONDecoder.parse(text);
             t.stop();
         }
-        t.logAverage("Decode "+file+" (String, avg " + count +" runs): ");
+        t.logAverage("Decode "+file+" (StringReader, avg " + count +" runs): ");
     }
 
     private void testString_lib(int prime, int count, String file) throws IOException, ParseException {
@@ -86,7 +86,7 @@ public class JSONDecoderPerformanceTest {
             parser.parse(text);
             t.stop();
         }
-        t.logAverage("Decode "+file+" (JSONSimple, String, avg " + count +" runs): ");
+        t.logAverage("Decode "+file+" (JSONSimple, StringReader, avg " + count +" runs): ");
     }
 
     private void testReader_lib(int prime, int count, String file) throws IOException, ParseException {
@@ -111,7 +111,7 @@ public class JSONDecoderPerformanceTest {
             reader.close();
             t.stop();
         }
-        t.logAverage("Decode "+file+" (JSONSimple, Reader, avg " + count +" runs): ");
+        t.logAverage("Decode "+file+" (JSONSimple, FileReader, avg " + count +" runs): ");
     }
 
     @Test
@@ -142,16 +142,6 @@ public class JSONDecoderPerformanceTest {
     @Test
     public void testMassiveString() throws IOException {
         testString(2, 10, "massive.json");
-    }
-
-    @Test
-    public void testMassiveMinReader() throws IOException {
-        testReader(2, 10, "massive.min.json");
-    }
-
-    @Test
-    public void testMassiveMinString() throws IOException {
-        testString(2, 10, "massive.min.json");
     }
 
 }

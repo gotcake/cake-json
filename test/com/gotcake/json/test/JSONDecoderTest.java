@@ -24,7 +24,7 @@ public class JSONDecoderTest {
         ArrayList<Object> expected = new ArrayList<Object>();
         expected.addAll(Arrays.asList(1, false, 3, "bar", null));
         String json = "[1, false, 3, \"bar\", null]";
-        ArrayList<Object> actual = JSONDecoder.parseArray(json);
+        Object actual = JSONDecoder.parse(json);
         assertEquals(expected, actual);
     }
 
@@ -33,7 +33,7 @@ public class JSONDecoderTest {
         ArrayList<Object> expected = new ArrayList<Object>();
         expected.addAll(Arrays.asList("foo", 1, false, Arrays.asList("bar", 2, Arrays.asList(3, 4, null), 5), true,  6));
         String json = "[\"foo\", 1, false, [\"bar\", 2, [3, 4, null], 5], true, 6]";
-        ArrayList<Object> actual = JSONDecoder.parseArray(json);
+        Object actual = JSONDecoder.parse(json);
         assertEquals(expected, actual);
     }
 
@@ -47,7 +47,7 @@ public class JSONDecoderTest {
                 "nil", null
         );
         String json = "{\"foo\": \"bar\", \"age\": 3, \"yes\": true, \"no\": false, \"nil\": null}";
-        LinkedHashMap actual = JSONDecoder.parseObject(json);
+        Object actual = JSONDecoder.parse(json);
         assertEquals(expected, actual);
     }
 
@@ -66,7 +66,7 @@ public class JSONDecoderTest {
                 "nil", null
         );
         String json = "{\"foo\": \"bar\", \"map\": {\"baz\": 123.0, \"map\": {\"123\":123}}, \"yes\": true, \"no\": false, \"nil\": null}";
-        LinkedHashMap actual = JSONDecoder.parseObject(json);
+        Object actual = JSONDecoder.parse(json);
         assertEquals(expected, actual);
     }
 
@@ -86,7 +86,7 @@ public class JSONDecoderTest {
                 "nil", null
         );
         String json = "{\"foo\": [true, false, 1, 2, 3.0], \"arr\": [{\"baz\": 123.0, \"map\": {\"123\":123}}, null, 1, 5], \"yes\": true, \"no\": false, \"nil\": null}";
-        LinkedHashMap actual = JSONDecoder.parseObject(json);
+        Object actual = JSONDecoder.parse(json);
         assertEquals(expected, actual);
     }
 

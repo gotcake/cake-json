@@ -1,6 +1,7 @@
 package com.gotcake.json.parser.minify;
 
 import com.gotcake.json.JSONEncoder;
+import com.gotcake.json.JSONObjectBuilder;
 import com.gotcake.json.RuntimeIOException;
 import com.gotcake.json.parser.JSONArrayHandler;
 import com.gotcake.json.parser.JSONObjectHandler;
@@ -14,77 +15,31 @@ import java.io.Writer;
  */
 public class MinifierJSONObjectHandler implements JSONObjectHandler<Object> {
 
-    private Writer writer;
-    private boolean first;
+    private JSONObjectBuilder builder;
 
-    public MinifierJSONObjectHandler(Writer writer) {
-        this.writer = writer;
-        first = true;
-        try{
-            writer.write('{');
-        } catch(IOException e) {
-            throw new RuntimeIOException(e);
-        }
+    public MinifierJSONObjectHandler(JSONObjectBuilder builder) {
+        this.builder = builder;
     }
 
     @Override
     public void handleEntry(String key, Object value) {
-
-        if (value != DUMMY_OBJ) {
-            try {
-                if (first) {
-                    first = false;
-                } else {
-                    writer.write(',');
-                }
-                JSONEncoder.writeEscapedString(key, writer);
-                writer.write(':');
-                JSONEncoder.write(value, writer);
-            } catch (IOException e) {
-                throw new RuntimeIOException(e);
-            }
-        }
+        if (value != DUMMY_OBJ)
+            builder.entry(key, value);
     }
 
     @Override
     public JSONObjectHandler<?> getChildObjectHandler(String key) {
-        try {
-            if (first) {
-                first = false;
-            } else {
-                writer.write(',');
-            }
-            JSONEncoder.writeEscapedString(key, writer);
-            writer.write(':');
-        } catch(IOException e) {
-            throw new RuntimeIOException(e);
-        }
-        return new MinifierJSONObjectHandler(writer);
+        return new MinifierJSONObjectHandler(builder.objectEntry(key));
     }
 
     @Override
     public JSONArrayHandler<?> getChildArrayHandler(String key) {
-        try {
-            if (first) {
-                first = false;
-            } else {
-                writer.write(',');
-            }
-            JSONEncoder.writeEscapedString(key, writer);
-            writer.write(':');
-        } catch(IOException e) {
-            throw new RuntimeIOException(e);
-        }
-        return new MinifierJSONArrayHandler(writer);
+        return new MinifierJSONArrayHandler(builder.arrayEntry(key));
     }
 
     @Override
     public Object getObject() {
-        try {
-            writer.write('}');
-        } catch (IOException e) {
-            throw new RuntimeIOException(e);
-        }
+        builder.end();
         return DUMMY_OBJ;
     }
 }

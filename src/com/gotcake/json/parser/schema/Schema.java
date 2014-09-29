@@ -16,12 +16,14 @@ public class Schema<T extends SchemaDecoder> {
     private final HashSet<String> requiredProps;
     private final Class<T> decoderClass;
     private final boolean validate;
+    private final String name;
 
-    public Schema(Class<T> decoderClass, boolean validate) {
+    public Schema(String name, Class<T> decoderClass, boolean validate) {
         properties = new HashMap<String, Property>();
         requiredProps = new HashSet<String>();
         this.decoderClass = decoderClass;
         this.validate = validate;
+        this.name = name;
     }
 
     public Property defineProperty(String name) {
@@ -36,6 +38,10 @@ public class Schema<T extends SchemaDecoder> {
         return p;
     }
 
+    public String getName() {
+        return name;
+    }
+
     protected Property getProperty(String name) {
         return properties.get(name);
     }
@@ -43,7 +49,7 @@ public class Schema<T extends SchemaDecoder> {
     public String validateRequiredProperties(Set<String> propertyNames) {
         for (String name: requiredProps) {
             if (!propertyNames.contains(name))
-                return "Property "+name+" is required for schema " + this.getClass().getCanonicalName();
+                return "Property "+name+" is required for schema " + this.name;
         }
         return null;
     }
@@ -51,12 +57,12 @@ public class Schema<T extends SchemaDecoder> {
     public String validateProperty(String name, Object val) {
         Property prop = properties.get(name);
         if (prop == null)
-            return "Property "+name+" not defined for schema " + this.getClass().getCanonicalName();
+            return "Property "+name+" not defined for schema " + this.name;
         if (val == null && prop.required)
-            return "Property "+name+" is required for schema " + this.getClass().getCanonicalName();
+            return "Property "+name+" is required for schema " + this.name;
         Class<?> cls = val.getClass();
         if (!prop.isAllowedType(cls))
-            return cls.getCanonicalName() + " is not a valid type of property "+name+" of schema " + this.getClass().getCanonicalName();
+            return cls.getCanonicalName() + " is not a valid type of property "+name+" of schema " + this.name;
         return null;
     }
 
@@ -72,10 +78,6 @@ public class Schema<T extends SchemaDecoder> {
 
     public boolean shouldValidate() {
         return validate;
-    }
-
-    public String getName() {
-        return getClass().getCanonicalName();
     }
 
     public class Property {

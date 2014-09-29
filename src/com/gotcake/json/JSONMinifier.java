@@ -9,31 +9,27 @@ import java.io.*;
  */
 public class JSONMinifier {
 
-    private static JSONDecoder<Object, Object> createMinifier(Reader reader, Writer writer) {
-        MinifierJSONHandlerFactory factory = new MinifierJSONHandlerFactory(writer);
-        return new JSONDecoder<Object, Object>(reader, factory);
-    }
+    private JSONMinifier() {}
 
     public static void minify(Reader reader, Writer writer) {
-        createMinifier(reader, writer).parse();
-        try {
-            writer.flush();
-        } catch (IOException e) {
-            throw new RuntimeIOException(e);
-        }
+        MinifierJSONHandlerFactory factory = new MinifierJSONHandlerFactory(writer);
+        JSONDecoder<Object, Object> decoder = new JSONDecoder<Object, Object>(reader, factory);
+        decoder.parse();
+        factory.flushEncoder();
     }
 
     public static String minifyString(String json) {
         StringWriter writer = new StringWriter();
-        createMinifier(new StringReader(json), writer).parse();
-        writer.flush();
+        minify(new StringReader(json), writer);
         return writer.toString();
     }
 
     public static void minifyFile(String sourceFile, String targetFile) {
         try {
             FileWriter writer = new FileWriter(targetFile);
-            createMinifier(new FileReader(sourceFile), writer).parse();
+            FileReader reader = new FileReader(sourceFile);
+            minify(reader, writer);
+            reader.close();
             writer.flush();
             writer.close();
         } catch (IOException e) {

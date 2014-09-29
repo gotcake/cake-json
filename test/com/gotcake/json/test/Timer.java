@@ -34,6 +34,8 @@ public class Timer {
         return time;
     }
 
+    public void clear() { total = 0; count = 0; time = 0; }
+
     public double average() {
         return total / count;
     }

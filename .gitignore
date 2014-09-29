@@ -1,6 +1,7 @@
-# Ignore all logfiles and tempfiles.
+# Ignore all logfiles and tempfiles and output files
 /log/*.log
 /tmp
+/out
 
 # Ignore junk OS files
 [Tt]humbs.db
