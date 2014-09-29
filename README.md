@@ -4,6 +4,9 @@
 A highly performant, highly flexible, stream based JSON encoding and decoding library. Provides coder-friendly APIs for
 encoding and decoding arbitrary JSON data as well as out-of-the-box decoding and encoding for normal JSON data structures.
 
+##WHY???
+Why did I make another JSON library for Java? Eh, because I felt like it. If you have a problem with that, don't use it.
+
 ## Decoding
 JSONDecoder.parse, JSONDecoder.parseObject, and JSONDecoder.parseArray provide your basic out-of-the-box decoding of JSON.
 JSON data types are mapped to Java types as outlined in the table below. Numbers containing decimal places are decoded into either

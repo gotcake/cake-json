@@ -69,8 +69,8 @@
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8" vertical-offset="0" max-vertical-offset="675">
-              <caret line="36" column="21" selection-start-line="36" selection-start-column="21" selection-end-line="36" selection-end-column="21" />
+            <state vertical-scroll-proportion="0.08888889" vertical-offset="0" max-vertical-offset="705">
+              <caret line="4" column="49" selection-start-line="4" selection-start-column="49" selection-end-line="4" selection-end-column="49" />
               <folding />
             </state>
           </provider>
@@ -175,8 +175,8 @@
         <option value="$PROJECT_DIR$/test/com/gotcake/json/test/JSONDecoderPerformanceTest.java" />
         <option value="$PROJECT_DIR$/src/com/gotcake/json/JSONDecoder.java" />
         <option value="$PROJECT_DIR$/test/com/gotcake/json/test/Minimizer.java" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -963,8 +963,8 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8" vertical-offset="0" max-vertical-offset="675">
-          <caret line="36" column="21" selection-start-line="36" selection-start-column="21" selection-end-line="36" selection-end-column="21" />
+        <state vertical-scroll-proportion="0.08888889" vertical-offset="0" max-vertical-offset="705">
+          <caret line="4" column="49" selection-start-line="4" selection-start-column="49" selection-end-line="4" selection-end-column="49" />
           <folding />
         </state>
       </provider>
