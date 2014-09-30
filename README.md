@@ -93,4 +93,7 @@ Advanced encoding is enabled via `JSONEncoder.object()` and `JSONEncoder.array()
 Minification is provided by the `JSONMinifier` class. It uses a custom advanced decoder implementation to re-encode JSON data while it is being decoded without storing any intermediate representation.
 
 ## What Else?
-Might add automatic serialization and deserialization of arbitrary objects via reflection.
+Might add automatic serialization and deserialization of arbitrary objects via reflection if I really cared enough to duplicate more work.
+
+## Perfomance
+Faster than JSON-simple. I can encode/decode a 10MB json file on my 2014 Macbook Pro in about 90ms. There's no beating google-json though. How did they pull off that much speed? Run the performance tests if you want to see how it performs.
