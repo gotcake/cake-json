@@ -1,11 +1,11 @@
 # Module cake-json
 
 ## Overview
-A highly performant, highly flexible, stream based JSON encoding and decoding library. Provides coder-friendly APIs for
+A performant, flexible, stream based JSON encoding and decoding library. Provides coder-friendly APIs for
 encoding and decoding arbitrary JSON data as well as out-of-the-box decoding and encoding for normal JSON data structures.
 
 ##Why another JSON library???
-Why did I make another JSON library for Java? Because I felt like it.
+Why did I make another JSON library for Java? Because I felt like it. Learning experience. Not going to be supported, sorry :(
 
 ## Basic Decoding
 `JSONDecoder.parse(String json)`, `JSONDecoder.parse(Reader r)`, and `JSONDecoder.parseFile(String filePath)` provide your basic out-of-the-box decoding of any JSON type. JSON data types are mapped to Java types as outlined in the table below.
